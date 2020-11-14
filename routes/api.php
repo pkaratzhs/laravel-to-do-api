@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\User as UserResource;
 use App\Http\Controllers\ToDoListController;
 use App\Http\Controllers\TaskController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserResource(Auth::user());
 });
 
-Route::apiResource('/lists',ToDoListController::class)->scoped();
-Route::resource('/lists/tasks',TaskController::class,[
+Route::apiResource('lists', ToDoListController::class)->scoped();
+
+//For some reason updating and probably deleting doesnt work except if i call shallow() here
+Route::resource('lists.tasks', TaskController::class, [
   'only' => ['store','update','destroy']
-]);
+])->shallow();

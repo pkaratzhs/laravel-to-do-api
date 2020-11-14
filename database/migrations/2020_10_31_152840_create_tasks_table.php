@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
                   ->on('to_do_lists')
                   ->onDelete('cascade');
             $table->string('title');
-            $table->timestamp('completed')->nullable();
+            $table->boolean('completed')->default(0);
             $table->timestamps();
         });
     }
